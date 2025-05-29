@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿// JwtAuthProvider/Infrastructure/Authentication/JwtTokenService.cs
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,38 +15,38 @@ public class JwtTokenService : IJwtTokenService
         _configuration = configuration;
     }
 
-    public string GenerateToken(string username, IEnumerable<string> roles)
+    public string GenerateToken(string userId, bool isAdmin)
     {
-        var claims = new List<Claim>
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, username),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.Name, username)
-        };
+        var jwtKey = _configuration["Jwt:Key"] ??
+            throw new InvalidOperationException("JWT key is not configured");
+        var issuer = _configuration["Jwt:Issuer"] ??
+            throw new InvalidOperationException("JWT issuer is not configured");
+        var audience = _configuration["Jwt:Audience"] ??
+            throw new InvalidOperationException("JWT audience is not configured");
 
-        foreach (var role in roles)
+        // Parse expiry time from configuration or use default
+        if (!int.TryParse(_configuration["Jwt:ExpiryInMinutes"], out int expiryInMinutes))
         {
-            claims.Add(new Claim(ClaimTypes.Role, role));
+            expiryInMinutes = 15; // Default to 15 minutes
         }
 
-        return GenerateToken(claims);
-    }
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-    public string GenerateToken(IEnumerable<Claim> claims)
-    {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-            _configuration["Jwt:Key"] ??
-            throw new InvalidOperationException("JWT key is not configured")));
-
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var claims = new List<Claim>
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, userId),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(ClaimTypes.Role, isAdmin ? "Admin" : "User")
+        };
 
         var token = new JwtSecurityToken(
-            issuer: _configuration["Jwt:Issuer"],
-            audience: _configuration["Jwt:Audience"],
+            issuer: issuer,
+            audience: audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(
-                _configuration["Jwt:ExpiryInMinutes"] ?? "60")),
-            signingCredentials: creds);
+            expires: DateTime.UtcNow.AddMinutes(expiryInMinutes),
+            signingCredentials: credentials
+        );
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }

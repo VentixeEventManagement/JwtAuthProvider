@@ -1,13 +1,8 @@
-﻿namespace JwtAuthProvider.Infrastructure.Authentication;
+﻿// JwtAuthProvider/Infrastructure/Authentication/TokenRequest.cs
+namespace JwtAuthProvider.Infrastructure.Authentication;
 
 public class TokenRequest
 {
-    public string Username { get; set; } = string.Empty;
-    public string Password { get; set; } = string.Empty;
-}
-
-public class TokenResponse
-{
-    public string Token { get; set; } = string.Empty;
-    public DateTime Expiration { get; set; }
+    public required string UserId { get; set; }
+    public bool IsAdmin { get; set; }
 }

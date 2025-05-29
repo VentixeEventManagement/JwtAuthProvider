@@ -1,10 +1,7 @@
-﻿using System.Security.Claims;
+﻿// JwtAuthProvider/Infrastructure/Authentication/IJwtTokenService.cs
+namespace JwtAuthProvider.Infrastructure.Authentication;
 
-namespace JwtAuthProvider.Infrastructure.Authentication
+public interface IJwtTokenService
 {
-    public interface IJwtTokenService
-    {
-        string GenerateToken(IEnumerable<Claim> claims);
-        string GenerateToken(string username, IEnumerable<string> roles);
-    }
+    string GenerateToken(string userId, bool isAdmin);
 }

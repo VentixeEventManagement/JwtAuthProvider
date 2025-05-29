@@ -1,4 +1,5 @@
-﻿using JwtAuthProvider.Infrastructure.Authentication;
+﻿// JwtAuthProvider/Controllers/TokenController.cs
+using JwtAuthProvider.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JwtAuthProvider.Controllers;
@@ -9,35 +10,31 @@ public class TokenController : ControllerBase
 {
     private readonly IJwtTokenService _tokenService;
     private readonly IConfiguration _configuration;
-    private readonly ILogger<TokenController> _logger;
 
-    public TokenController(
-        IJwtTokenService tokenService,
-        IConfiguration configuration,
-        ILogger<TokenController> logger)
+    public TokenController(IJwtTokenService tokenService, IConfiguration configuration)
     {
         _tokenService = tokenService;
         _configuration = configuration;
-        _logger = logger;
     }
 
     [HttpPost]
     public IActionResult GetToken([FromBody] TokenRequest request)
     {
-        // In a real application, validate credentials against a database
-        // For now, we'll accept any username/password (as mentioned, security will be added later)
-
-        _logger.LogInformation("Token requested for user: {Username}", request.Username);
-
-        // Generate token with some default roles (you can customize this later)
-        var token = _tokenService.GenerateToken(request.Username, new[] { "User" });
-
-        var expiryMinutes = Convert.ToDouble(_configuration["Jwt:ExpiryInMinutes"] ?? "60");
-
-        return Ok(new TokenResponse
+        // Verify the API key from the X-API-KEY header
+        if (!Request.Headers.TryGetValue("X-API-KEY", out var apiKeyHeader))
         {
-            Token = token,
-            Expiration = DateTime.UtcNow.AddMinutes(expiryMinutes)
-        });
+            return Unauthorized("API key header is missing");
+        }
+
+        var expectedApiKey = _configuration["ApiKey"];
+        if (string.IsNullOrEmpty(expectedApiKey) || apiKeyHeader != expectedApiKey)
+        {
+            return Unauthorized("Invalid API key");
+        }
+
+        // Generate the JWT token
+        var token = _tokenService.GenerateToken(request.UserId, request.IsAdmin);
+
+        return Ok(new { token });
     }
 }
