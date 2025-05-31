@@ -17,15 +17,15 @@ public class JwtTokenService : IJwtTokenService
 
     public string GenerateToken(string userId, bool isAdmin)
     {
-        var jwtKey = _configuration["Jwt:Key"] ??
+        var jwtKey = _configuration["JWT:Secret"] ??
             throw new InvalidOperationException("JWT key is not configured");
-        var issuer = _configuration["Jwt:Issuer"] ??
+        var issuer = _configuration["JWT:Issuer"] ??
             throw new InvalidOperationException("JWT issuer is not configured");
-        var audience = _configuration["Jwt:Audience"] ??
+        var audience = _configuration["JWT:Audience"] ??
             throw new InvalidOperationException("JWT audience is not configured");
 
         // Parse expiry time from configuration or use default
-        if (!int.TryParse(_configuration["Jwt:ExpiryInMinutes"], out int expiryInMinutes))
+        if (!int.TryParse(_configuration["JWT:ExpireMinutes"], out int expiryInMinutes))
         {
             expiryInMinutes = 15; // Default to 15 minutes
         }
@@ -34,11 +34,11 @@ public class JwtTokenService : IJwtTokenService
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var claims = new List<Claim>
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, userId),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim(ClaimTypes.Role, isAdmin ? "Admin" : "User")
-        };
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, userId),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(ClaimTypes.Role, isAdmin ? "Admin" : "User")
+    };
 
         var token = new JwtSecurityToken(
             issuer: issuer,

@@ -43,6 +43,8 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "ApiKeyScheme"
     });
 
+
+
     var scheme = new OpenApiSecurityScheme
     {
         Reference = new OpenApiReference
