@@ -2,6 +2,8 @@
 
 JwtAuthProvider is a .NET 8 Web API project that provides robust JWT (JSON Web Token) authentication services. It is designed to help secure your applications by issuing and validating JWT tokens, simplifying the implementation of authentication and authorization in your .NET solutions.
 
+This token is used by https://github.com/VentixeEventManagement/ApiGateway to authroize access, (The other microservices are in a isolated enviroment)
+
 ## 🚀 Features
 
 - ✅ Built with .NET 8  
