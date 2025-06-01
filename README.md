@@ -1,39 +1,88 @@
-JwtAuthProvider
-JwtAuthProvider is a .NET 8 Web API project that provides JWT (JSON Web Token) authentication services. It is designed to help secure your applications by issuing and validating JWT tokens, making it easy to implement authentication and authorization in your .NET solutions.
-Features
-•	Built with .NET 8
-•	JWT token generation and validation
-•	RESTful API endpoints for authentication
-•	Integration with Swashbuckle (Swagger) for API documentation
-•	Unit and integration tests using xUnit and Moq
-Getting Started
-1.	Clone the repository
-Use your preferred method to clone this repository to your local machine.
-2.	Restore dependencies
-Run dotnet restore in the project directory to install all required NuGet packages.
-3.	Configure settings
-Update the appsettings.json file with your JWT settings and other configuration as needed.
-4.	Run the application
-Use dotnet run or start the project in Visual Studio 2022.
-5.	Access API documentation
-Once running, navigate to the Swagger UI (usually at /swagger) to explore and test the API endpoints.
-Project Structure
-•	Controllers: API endpoints for authentication and token management
-•	Infrastructure/Authentication: Core JWT logic and interfaces
-•	Properties: Launch settings for development
-•	appsettings.json: Application configuration
-•	Tests: Unit and integration tests in the JwtAuthProvider.Tests project
-Testing
-This project uses xUnit and Moq for testing. To run tests, use the following command in the test project directory:
+🔐 JwtAuthProvider
+JwtAuthProvider is a .NET 8 Web API project that provides robust JWT (JSON Web Token) authentication services. It's designed to help secure your applications by issuing and validating JWT tokens, simplifying the implementation of authentication and authorization in your .NET solutions.
+
+🚀 Features
+✅ Built with .NET 8
+
+🔐 JWT token generation and validation
+
+📡 RESTful API endpoints for authentication
+
+📘 Integrated with Swashbuckle (Swagger) for API documentation
+
+🧪 Unit and integration tests using xUnit and Moq
+
+🛠️ Getting Started
+1. Clone the Repository
+bash
+Copy
+Edit
+git clone https://github.com/your-username/JwtAuthProvider.git
+cd JwtAuthProvider
+2. Restore Dependencies
+bash
+Copy
+Edit
+dotnet restore
+3. Configure Settings
+Update the appsettings.json file with your JWT configuration and other necessary settings.
+
+4. Run the Application
+bash
+Copy
+Edit
+dotnet run
+Or open the project in Visual Studio 2022 and start debugging.
+
+5. Access API Documentation
+Once running, navigate to:
+
+bash
+Copy
+Edit
+https://localhost:{port}/swagger
+Explore and test the API endpoints using Swagger UI.
+
+📁 Project Structure
+graphql
+Copy
+Edit
+JwtAuthProvider/
+├── Controllers/               # API endpoints for authentication and token management
+├── Infrastructure/
+│   └── Authentication/        # Core JWT logic and interfaces
+├── Properties/                # Launch settings for development
+├── appsettings.json           # Application configuration
+├── JwtAuthProvider.Tests/     # Unit and integration tests
+🧪 Testing
+This project uses xUnit and Moq for unit and integration testing.
+
+To run the tests:
+
+bash
+Copy
+Edit
+cd JwtAuthProvider.Tests
 dotnet test
-Dependencies
-•	Microsoft.NET.Test.Sdk
-•	Moq
-•	Swashbuckle.AspNetCore
-•	System.IdentityModel.Tokens.Jwt
-•	xunit
-•	xunit.runner.visualstudio
-Contributing
-Contributions are welcome! Please open issues or submit pull requests for any improvements or bug fixes.
-License
+📦 Dependencies
+Microsoft.NET.Test.Sdk
+
+Moq
+
+Swashbuckle.AspNetCore
+
+System.IdentityModel.Tokens.Jwt
+
+xunit
+
+xunit.runner.visualstudio
+
+🤝 Contributing
+Contributions are welcome! Feel free to:
+
+Open issues
+
+Submit pull requests
+
+📄 License
 This project is licensed under the MIT License.
