@@ -1,3 +1,4 @@
+// This document was formatted and refined by AI
 using JwtAuthProvider.Infrastructure.Authentication;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -6,14 +7,14 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
-builder.Services.AddHttpClient(); // Add HttpClient factory
 
-// Add JWT Token Service
+builder.Services.AddHttpClient();
+
+
 builder.Services.AddSingleton<IJwtTokenService, JwtTokenService>();
 
-// Add CORS policy
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
@@ -28,12 +29,12 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// Configure Swagger with API Key header
+
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "JWT Auth Provider API", Version = "v1" });
 
-    // Add API key header parameter
+  
     c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
     {
         Description = "API Key Authentication",
@@ -65,7 +66,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline here.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -83,3 +84,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

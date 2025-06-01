@@ -1,4 +1,4 @@
-﻿// JwtAuthProvider/Controllers/TokenController.cs
+﻿// This document was formatted and refined by AI
 using JwtAuthProvider.Infrastructure.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,7 +20,7 @@ public class TokenController : ControllerBase
     [HttpPost]
     public IActionResult GetToken([FromBody] TokenRequest request)
     {
-        // Verify the API key from the X-API-KEY header
+     
         if (!Request.Headers.TryGetValue("X-API-KEY", out var apiKeyHeader))
         {
             return Unauthorized("API key header is missing");
@@ -32,7 +32,7 @@ public class TokenController : ControllerBase
             return Unauthorized("Invalid API key");
         }
 
-        // Generate the JWT token
+       
         var token = _tokenService.GenerateToken(request.UserId, request.IsAdmin);
 
         return Ok(new { token });

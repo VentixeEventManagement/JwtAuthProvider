@@ -1,4 +1,4 @@
-﻿// JwtAuthProvider/Infrastructure/Authentication/JwtTokenService.cs
+﻿// This document was formatted and refined by AI
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -24,10 +24,10 @@ public class JwtTokenService : IJwtTokenService
         var audience = _configuration["JWT:Audience"] ??
             throw new InvalidOperationException("JWT audience is not configured");
 
-        // Parse expiry time from configuration or use default
+  
         if (!int.TryParse(_configuration["JWT:ExpireMinutes"], out int expiryInMinutes))
         {
-            expiryInMinutes = 15; // Default to 15 minutes
+            expiryInMinutes = 15; 
         }
 
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));

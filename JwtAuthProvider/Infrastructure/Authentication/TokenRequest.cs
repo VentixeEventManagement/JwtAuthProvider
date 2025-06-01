@@ -1,4 +1,4 @@
-﻿// JwtAuthProvider/Infrastructure/Authentication/TokenRequest.cs
+﻿// This document was formatted and refined by AI
 namespace JwtAuthProvider.Infrastructure.Authentication;
 
 public class TokenRequest
