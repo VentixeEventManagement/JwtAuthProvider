@@ -1,5 +1,4 @@
-🔐 
-JwtAuthProvider
+## 🔐 JwtAuthProvider
 JwtAuthProvider is a .NET 8 Web API project that provides robust JWT (JSON Web Token) authentication services. It is designed to help secure your applications by issuing and validating JWT tokens, simplifying the implementation of authentication and authorization in your .NET solutions.
 
 🚀 Features
